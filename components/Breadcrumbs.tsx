@@ -35,7 +35,7 @@ export default function BreadcrumbHeader ({className}: {className?: string}) {
 
   useEffect(() => {
     setCrumbs(() => generateBreadcrumbs())
-  }, [pathname])
+  }, [pathname, generateBreadcrumbs])
 
     return (
       <Breadcrumb>

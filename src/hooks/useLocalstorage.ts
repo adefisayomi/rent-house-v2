@@ -1,41 +1,51 @@
-import { useState, useEffect, Dispatch, SetStateAction, useLayoutEffect } from 'react';
+import { useReducer, useEffect, Dispatch } from 'react';
 
-type UseLocalStorageReturnType<T> = [T, Dispatch<SetStateAction<T>>];
+type UseLocalStorageReturnType<T> = [T, (value: T) => void];
 
-export default function useLocalStorage<T>(key: string, defaultValue: T): UseLocalStorageReturnType<T> {
-  const [value, setValue] = useState<T>(() => {
-    if (typeof window !== 'undefined') {
-      try {
+function useLocalStorage<T>(key: string, defaultValue: T): UseLocalStorageReturnType<T> {
+  type Action = { type: 'INIT' | 'UPDATE'; payload?: T };
+
+  function reducer(state: T, action: Action): T {
+    switch (action.type) {
+      case 'INIT': {
         const storedValue = window.localStorage.getItem(key);
-        return storedValue ? JSON.parse(storedValue) : defaultValue;
-      } catch (error) {
-        console.error(`Error parsing localStorage item "${key}":`, error);
-        return defaultValue;
+        if (storedValue !== null) {
+          return JSON.parse(storedValue) as T;
+        }
+        return state;
       }
+      case 'UPDATE':
+        return action.payload as T;
+      default:
+        throw new Error(`Unhandled action type: ${action.type}`);
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, defaultValue, () => {
+    if (typeof window !== 'undefined') {
+      const storedValue = window.localStorage.getItem(key);
+      return storedValue !== null ? JSON.parse(storedValue) as T : defaultValue;
     }
     return defaultValue;
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
-      try {
-        const storedValue = window.localStorage.getItem(key);
-        if (storedValue && JSON.stringify(value) !== storedValue) {
-          setValue(JSON.parse(storedValue));
-        } else if (!storedValue && defaultValue !== value) {
-          setValue(defaultValue);
-        }
-      } catch (error) {
-        console.error(`Error parsing localStorage item "${key}" in useLayoutEffect:`, error);
-      }
+      window.localStorage.setItem(key, JSON.stringify(state));
     }
-  }, [key]); // Remove defaultValue from the dependency array
+  }, [key, state]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window.localStorage.setItem(key, JSON.stringify(value));
+      dispatch({ type: 'INIT' });
     }
-  }, [key, value]);
+  }, [key]);
 
-  return [value, setValue];
+  const setValue = (value: T) => {
+    dispatch({ type: 'UPDATE', payload: value });
+  };
+
+  return [state, setValue];
 }
+
+export default useLocalStorage;
