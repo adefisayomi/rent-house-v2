@@ -44,9 +44,9 @@ export function UserMenu () {
 
               <div className="flex w-full flex-col items-start">
                 <Link href={Routes.dashboard} className="w-full">
-                  <Button variant='ghost' className="border-b flex items-center justify-start w-full h-9  rounded-none gap-1 p-2">
-                      <LayoutDashboard className="w-4 h-4" />
-                      <h5 className="text-[11px]">Dashboard</h5>
+                  <Button variant='ghost' className="border-b outline-none flex items-center justify-start w-full h-9  rounded-none gap-1 p-2">
+                      <LayoutDashboard className="w-5 h-5" />
+                      <h5 className="text-xs">Dashboard</h5>
                   </Button>
                 </Link>
 
