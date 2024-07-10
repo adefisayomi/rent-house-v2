@@ -14,6 +14,9 @@ import { _propertyTypes } from "./_data";
 import { propertySearchSchema } from "./formSchemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
+import useLocalStorage from "@/src/hooks/useLocalstorage";
+import AutocompleteComponent from "./AutocompleteComponent";
 
 export function HomeSearchBox() {
   const form = useForm<yup.InferType<typeof propertySearchSchema>>({
@@ -27,8 +30,10 @@ export function HomeSearchBox() {
     //   furnished: false,
     },
   });
-
+  const [location, setLocation] = useLocalStorage('location', {})
   const _priceList = generatePriceList();
+
+  console.log(location)
 
   function onSubmit(data: yup.InferType<typeof propertySearchSchema>) {
     console.log(data);
@@ -39,7 +44,7 @@ export function HomeSearchBox() {
       <Form {...form}>
         <div className="w-full flex flex-col py-10 px-5 gap-6">
         <div className='flex w-full items-center gap-4'>
-            <Input placeholder="location..." className="bg-muted" />
+            <AutocompleteComponent setLocation={setLocation} />
             <Button type="submit" onClick={form.handleSubmit(onSubmit)} className="text-xs px-10 h-11">Search</Button>
         </div>
         <div className="md:grid md:grid-cols-4 flex flex-col items-start gap-4 w-full justify-between md:place-items-center">
