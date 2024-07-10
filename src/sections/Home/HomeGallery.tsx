@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import Image from "next/image";
 
 
 type ImagesProps = {
@@ -25,48 +26,59 @@ export default function HomeGallery ({images}: ImagesProps) {
 }
 
 const Gallery = ({ images }: ImagesProps) => {
-    return (
+  return (
       <div className="w-full h-full flex flex-wrap gap-4 max-h-[75%]">
-        <div className="flex flex-col gap-4 flex-1">
-          <div className="rounded-2xl h-full relative flex overflow-hidden">
-            <img
-              src={images[0].image}
-              alt="image"
-              className="w-full h-full object-cover rounded-2xl hover:scale-105 transition-transform duration-300"
-            />
+          <div className="flex flex-col gap-4 flex-1">
+              <div className="rounded-2xl h-full relative flex overflow-hidden">
+                  <Image
+                      src={images[0].image}
+                      alt="image"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-2xl hover:scale-105 transition-transform duration-300"
+                  />
+              </div>
+              <div className="rounded-2xl h-full relative flex overflow-hidden">
+                  <Image
+                      src={images[1].image}
+                      alt="image"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-2xl hover:scale-105 transition-transform duration-300"
+                  />
+              </div>
           </div>
-          <div className="rounded-2xl h-full relative flex overflow-hidden">
-            <img
-              src={images[1].image}
-              alt="image"
-              className="w-full h-full object-cover rounded-2xl hover:scale-105 transition-transform duration-300"
-            />
+          <div className="flex-1 rounded-2xl relative overflow-hidden">
+              <Image
+                  src={images[2].image}
+                  alt="image"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-2xl hover:scale-105 transition-transform duration-300"
+              />
           </div>
-        </div>
-        <div className="flex-1 rounded-2xl relative overflow-hidden">
-          <img
-            src={images[2].image}
-            alt="image"
-            className="w-full h-full object-cover rounded-2xl hover:scale-105 transition-transform duration-300"
-          />
-        </div>
-        <div className="flex flex-col gap-4 flex-1">
-          <div className="rounded-2xl h-full relative flex overflow-hidden">
-            <img
-              src={images[3].image}
-              alt="image"
-              className="w-full h-full object-cover rounded-2xl hover:scale-105 transition-transform duration-300"
-            />
+          <div className="flex flex-col gap-4 flex-1">
+              <div className="rounded-2xl h-full relative flex overflow-hidden">
+                  <Image
+                      src={images[3].image}
+                      alt="image"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-2xl hover:scale-105 transition-transform duration-300"
+                  />
+              </div>
+              <div className="rounded-2xl h-full relative flex overflow-hidden">
+                  <Image
+                      src={images[4].image}
+                      alt="image"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-2xl hover:scale-105 transition-transform duration-300"
+                  />
+              </div>
           </div>
-          <div className="rounded-2xl h-full relative flex overflow-hidden">
-            <img
-              src={images[4].image}
-              alt="image"
-              className="w-full h-full object-cover rounded-2xl hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-        </div>
       </div>
-    );
-  };
+  );
+};
+
   

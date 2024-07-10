@@ -2,7 +2,6 @@ import CustomToast from "@/components/CustomToast";
 import PageTransition from "@/components/PageTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import useAuthStore from "@/src/contexts/useAuthStore";
-import useNetwork from "@/src/hooks/useNetwork";
 import "@/styles/globals.css";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
@@ -41,13 +40,7 @@ export default function App({
     } else if (user && router.pathname.startsWith("/auth")) {
       router.push("/");
     }
-  }, [user, router.pathname]);
-
-  // const isOnline = useNetwork();
-
-  // if (!isOnline) {
-  //   return <div>No internet</div>;
-  // }
+  }, [user, router]);
 
   return (
     <>

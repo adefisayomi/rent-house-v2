@@ -21,7 +21,7 @@ export default function Login () {
                 </div>
 
                 <AuthLogin />
-                <p className="text-xs">Don't have an account? <Link href={Routes.signup} className="text-primary font-semibold">Create an account</Link></p>
+                <p className="text-xs">{"Don't have an account?"} <Link href={Routes.signup} className="text-primary font-semibold">Create an account</Link></p>
             </div>
             </>
         </Page>

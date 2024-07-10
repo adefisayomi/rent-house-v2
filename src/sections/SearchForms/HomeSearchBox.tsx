@@ -38,8 +38,8 @@ export function HomeSearchBox() {
     <div id="dark-mode" className="w-full max-w-3xl min-h-32 p-2 flex items-center px-4 rounded-lg dark:border-2">
       <Form {...form}>
         <div className="w-full flex flex-col py-10 px-5 gap-6">
-        <div className='flex w-full items-center gap-2'>
-            <Input placeholder="location..." className="bg-transparent" />
+        <div className='flex w-full items-center gap-4'>
+            <Input placeholder="location..." className="bg-muted" />
             <Button type="submit" onClick={form.handleSubmit(onSubmit)} className="text-xs px-10 h-11">Search</Button>
         </div>
         <div className="md:grid md:grid-cols-4 flex flex-col items-start gap-4 w-full justify-between md:place-items-center">

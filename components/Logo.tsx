@@ -1,4 +1,5 @@
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -15,10 +16,12 @@ export default function Logo({isDark=false}: {isDark?: boolean}) {
     return (
         <div className="flex items-end">
             <Link href='/'>
-                <img 
+                <Image 
                     src={isDark ? '/logo_dark.svg' : resolvedTheme === 'dark' ? '/logo_dark.svg' : '/logo_light.svg'}
                     alt='logo'
                     className="w-[150px] h-auto"
+                    width={200}
+                    height={400}
                 />
             </Link>
         </div>

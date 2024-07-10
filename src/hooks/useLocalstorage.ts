@@ -14,9 +14,15 @@ export default function useLocalStorage<T>(key: string, defaultValue: T): UseLoc
   useLayoutEffect(() => {
     if (typeof window !== 'undefined') {
       const storedValue = window.localStorage.getItem(key);
-      setValue(storedValue ? JSON.parse(storedValue) : defaultValue);
+      // Only update state if storedValue differs from current value or defaultValue changes
+      if (storedValue && JSON.stringify(value) !== storedValue) {
+        setValue(JSON.parse(storedValue));
+      } else if (!storedValue && defaultValue !== value) {
+        setValue(defaultValue);
+      }
     }
-  }, [key]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, defaultValue]); // Remove defaultValue from the dependency array
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
