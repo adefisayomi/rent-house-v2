@@ -9,7 +9,6 @@ import {
   sendPasswordResetEmail,
   User as FirebaseUser,
   updateProfile,
-  deleteUser,
   getAdditionalUserInfo,
 } from 'firebase/auth';
 import Cookies from 'js-cookie';
@@ -20,7 +19,7 @@ import useAlert from '../hooks/useAlert';
 import { getFirebaseError } from '../utils/firebaseErrors';
 
 interface CustomClaims {
-  accountType: string;
+  accountType: 'agent' | 'renter';
   [key: string]: any;
 }
 
@@ -43,17 +42,16 @@ interface AuthState {
     accountType: 'renter' | 'agent';
     firstName: string;
   }) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
-  facebookLogin: () => Promise<void>;
+  loginWithGoogle: (claim: { accountType?: 'renter' | 'agent' }) => Promise<void>;
+  facebookLogin: (claim: { accountType?: 'renter' | 'agent' }) => Promise<void>;
   sendResetPasswordLink: (email: string) => Promise<void>;
 }
 
 type AuthPersist = Pick<AuthState, 'user'>;
 
 const fetchCustomClaims = async (user: FirebaseUser): Promise<CustomClaims> => {
-  const { data } = await axios.post("/api/auth/getClaims", { uid: user.uid});
-  console.log('get Claims', data)
-  return data.data as CustomClaims
+  const { data } = await axios.post("/api/auth/getClaims", { uid: user.uid });
+  return data.data as CustomClaims;
 };
 
 const useAuthStore = create<AuthState>()(
@@ -116,23 +114,22 @@ const useAuthStore = create<AuthState>()(
         registerWithEmail: async ({ email, password, lastName, accountType, firstName }) => {
           try {
             set({ loading: true, error: null });
-            
+
             // Create user with email and password
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        
+
             // Call server-side function to set custom claims
             const { data } = await axios.post("/api/auth/setUserClaims", { uid: userCredential.user.uid, accountType });
-            console.log(data)
             if (!data.success) throw new Error(data.message);
-        
+
             // Update user profile with additional information
             await updateProfile(userCredential.user, {
               displayName: `${firstName} ${lastName}`,
             });
-        
+
             // Wait for the custom claims to be set before initializing the user
             await initializeUser(userCredential.user);
-            
+
             setAlert("Registration successful. Welcome to Rent-House!", 'success');
           } catch (error: any) {
             set({ user: null, loading: false, error: error.message });
@@ -141,19 +138,21 @@ const useAuthStore = create<AuthState>()(
           }
         },
 
-        loginWithGoogle: async () => {
+        loginWithGoogle: async ({ accountType }) => {
           try {
             set({ loading: true, error: null });
             const result = await signInWithPopup(auth, googleProvider);
             const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
-        
+
             if (isNewUser) {
+              // Set custom claims if new user
+              await axios.post("/api/auth/setUserClaims", { uid: result.user.uid, accountType: accountType || 'renter' });
               setAlert("Welcome to Rent-House!", 'success');
             } else {
               const firstName = result.user.displayName?.split(' ')[0];
               setAlert(`Welcome back, ${firstName}!`, 'success');
             }
-        
+
             await initializeUser(result.user);
           } catch (error: any) {
             set({ user: null, loading: false, error: error.message });
@@ -161,21 +160,23 @@ const useAuthStore = create<AuthState>()(
             setAlert(getFirebaseError(code) || message, 'error');
           }
         },
-        
-        facebookLogin: async () => {
+
+        facebookLogin: async ({ accountType }) => {
           try {
             set({ loading: true, error: null });
             const result = await signInWithPopup(auth, facebookProvider);
             const user = result.user;
             const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
-        
+
             if (isNewUser) {
+              // Set custom claims if new user
+              await axios.post("/api/auth/setUserClaims", { uid: user.uid, accountType: accountType || 'renter'  });
               setAlert("Welcome to Rent-House!", 'success');
             } else {
               const firstName = user.displayName?.split(' ')[0];
               setAlert(`Welcome back, ${firstName}!`, 'success');
             }
-        
+
             await initializeUser(user);
           } catch (error: any) {
             set({ user: null, loading: false, error: error.message });

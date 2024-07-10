@@ -169,7 +169,7 @@ export function AgentSignupForm() {
       </Form>
 
       <LabelSeparator label="or" className="text-xs my-5" />
-      <SocialAuth />
+      <SocialAuth accountType="agent" />
     </div>
   );
 }
@@ -265,7 +265,7 @@ export function RenterSignupForm () {
             </Form>
 
             <LabelSeparator label='or' className='text-xs my-5' />
-            <SocialAuth />
+            <SocialAuth accountType="renter" />
         </div>
     )
 }

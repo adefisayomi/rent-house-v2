@@ -21,14 +21,14 @@ export function FacebookAuth ({handleClick}: {handleClick: () => void}) {
     )
 }
 
-export default function SocialAuth () {
+export default function SocialAuth ({accountType}: {accountType?: 'agent' | 'renter'}) {
 
     const {loginWithGoogle, facebookLogin} = useAuthStore()
 
     return (
         <div className='w-full grid grid-cols-2 gap-2'>
-            <GoogleAuth handleClick={loginWithGoogle} />
-            <FacebookAuth handleClick={facebookLogin} />
+            <GoogleAuth handleClick={() => loginWithGoogle({accountType})} />
+            <FacebookAuth handleClick={() => facebookLogin({accountType})} />
         </div>
     )
 }
