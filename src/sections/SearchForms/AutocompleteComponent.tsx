@@ -41,7 +41,7 @@ const AutocompleteComponent = ({setLocation}: {setLocation: any}) => {
       />
 
       {/* {loading && <p className='absolute left-0 top-full mt-2 text-xs'>Loading...</p>} */}
-      {error && <p className='absolute left-0 top-full mt-2 text-sm text-red-500'>{error}</p>}
+      {/* {error && <p className='absolute left-0 top-full mt-2 text-sm text-red-500'>{error}</p>} */}
       {isDropdownOpen && results.length > 0 && (
         <ul id='dark-mode' className='absolute left-0 top-full mt-2 w-full bg-background border z-10'>
           {results.map((result, index) => (
