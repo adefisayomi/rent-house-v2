@@ -56,7 +56,7 @@ console.log(current, count)
             <div className="w-fit flex items-center gap-1">
                 {
                     Array.from({length: count}).map((_, index) => (
-                        <DotButton onClick={() => handleSetActive(index)} active={index+1 === current} />
+                        <DotButton key={index} onClick={() => handleSetActive(index)} active={index+1 === current} />
                     ))
                 }
             </div>
