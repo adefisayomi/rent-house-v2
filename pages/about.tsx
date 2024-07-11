@@ -1,6 +1,8 @@
 import Page from "@/components/page";
 import CustomLayout from "@/src/Layout/CustomLayout";
 import HomeGallery from "@/src/sections/Home/HomeGallery";
+import GlobalProperties from "@/src/sections/about-us/GlobalProperties";
+import SignatureFeature from "@/src/sections/about-us/SignatureFeature";
 import TestimonialSlider from "@/src/sections/about-us/TestimonialSlider";
 import { ReactNode } from "react";
 
@@ -8,13 +10,21 @@ export default function AboutUs() {
   return (
     <Page title="About Us">
       <div className="w-full">
+
+      <div className="w-full h-[85vh] flex items-center justify-center bg-slate-50 border-b dark:bg-background">
+        <GlobalProperties />
+      </div>
+
+      <div className="w-full h-[85vh] flex items-center justify-center border-b bg-slate-100 dark:bg-background">
+        <SignatureFeature />
+      </div>
         <HomeGallery images={items} />
 
-        <div className="w-full h-[90vh] flex items-center justify-center bg-slate-100 dark:bg-background">
+        <div className="w-full h-[85vh] flex items-center justify-center bg-slate-100 dark:bg-background">
           <div className="w-full h-full relative flex items-center">
-            <div className="absolute left-0 top-0 h-full w-[50%] bg-gradient-to-r from-slate-100 via-slate-100/0 to-transparent dark:from-background dark:via-background/0 z-10" />
+            <div className="absolute left-0 top-0 h-full w-[35%] bg-gradient-to-r from-slate-100 via-slate-100/0 to-transparent dark:from-background dark:via-background/0 z-10" />
             <TestimonialSlider />
-            <div className="absolute right-0 top-0 h-full w-[50%] bg-gradient-to-l from-slate-100 via-slate-100/0 to-transparent dark:from-background dark:via-background/0 z-10" />
+            <div className="absolute right-0 top-0 h-full w-[35%] bg-gradient-to-l from-slate-100 via-slate-100/0 to-transparent dark:from-background dark:via-background/0 z-10" />
           </div>
         </div>
       </div>
