@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import useLocalStorage from './useLocalstorage';
 
 const locationIQTOKEN = process.env.NEXT_PUBLIC_LOCATION_IQ_TOKEN!;
-const locationIQURL = `https://api.locationiq.com/v1/autocomplete?key=${locationIQTOKEN}&q=`;
+const locationIQURL = `https://api.locationiq.com/v1/autocomplete?key=${locationIQTOKEN}&countrycodes=NG&q=`;
 
 const cache = new Map<string, any[]>();
 
