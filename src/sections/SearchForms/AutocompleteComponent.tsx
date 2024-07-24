@@ -68,7 +68,7 @@ const AutocompleteComponent = ({ setLocation }: { setLocation: any }) => {
   return (
     <div className="w-full relative" id="dark-mode" ref={wrapperRef}>
       <Input
-        placeholder="Type to search..."
+        placeholder="Enter a state, locality or area"
         className="bg-muted"
         type="text"
         value={query}

@@ -1,5 +1,4 @@
 import CustomToast from "@/components/CustomToast";
-import PageTransition from "@/components/PageTransition";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import useAuthStore from "@/src/contexts/useAuthStore";
 import "@/styles/globals.css";
@@ -52,9 +51,7 @@ export default function App({
       >
         <CustomToast />
         <div className={poppins.className}>
-          <PageTransition>
-            {getLayout(<Component {...pageProps} />)}
-          </PageTransition>
+          {getLayout(<Component {...pageProps} />)}
         </div>
       </ThemeProvider>
     </>

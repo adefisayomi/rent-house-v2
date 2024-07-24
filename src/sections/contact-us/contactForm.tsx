@@ -30,7 +30,7 @@ export default function ContactUsForm () {
 
     return (
         <Form {...form}>
-            <form  onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-center gap-4 w-full max-w-2xl h-[70vh] bg-white border rounded-2xl px-8 py-14 dark:bg-background">
+            <form  onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-center gap-4 w-full max-w-2xl h-[70vh] bg-white border rounded-2xl px-8 py-5 dark:bg-background">
 
                 <FormField
                     control={form.control}
@@ -105,7 +105,7 @@ export default function ContactUsForm () {
                 />
 
 
-                <Button className="h-20">Send</Button>
+                <Button className="h-11">Send</Button>
 
             </form>
         </Form>

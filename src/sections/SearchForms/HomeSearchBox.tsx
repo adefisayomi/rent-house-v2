@@ -33,7 +33,6 @@ export function HomeSearchBox() {
   const [location, setLocation] = useLocalStorage('location', {})
   const _priceList = generatePriceList();
 
-  console.log(location)
 
   function onSubmit(data: yup.InferType<typeof propertySearchSchema>) {
     console.log(data);
